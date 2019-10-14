@@ -94,6 +94,7 @@ class GCSRepository(YumRepository):
     self.gpgcheck = repo.gpgcheck
     self.gpgkey = repo.gpgkey
     self.enablegroups = repo.enablegroups
+    self.exclude = repo.exclude
 
     for attr in OPTIONAL_ATTRIBUTES:
       if hasattr(repo, attr):
