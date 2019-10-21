@@ -4,6 +4,7 @@ from google.cloud import storage
 
 import logging
 import os
+import requests
 
 import yum
 import yum.config
@@ -23,6 +24,11 @@ CONDUIT = None
 OPTIONAL_ATTRIBUTES = ['priority', 'base_persistdir', 'metadata_expire',
                        'skip_if_unavailable', 'keepcache', 'priority']
 UNSUPPORTED_ATTRIBUTES = ['mirrorlist']
+
+headers = {
+    'Metadata-Flavor': 'Google',
+}
+r = requests.get('http://169.254.169.254/computeMetadata/v1/project/project-id', headers=headers)
 
 def config_hook(conduit):
   yum.config.RepoConf.google_project_id = yum.config.Option()
@@ -85,6 +91,8 @@ class GCSRepository(YumRepository):
       os.environ[environment_vars.CREDENTIALS] = repo.google_application_credentials
     if repo.google_project_id:
       os.environ[environment_vars.PROJECT] = repo.google_project_id
+    else:
+      os.environ[environment_vars.PROJECT] = r.content
 
     self.project_id = os.environ[environment_vars.PROJECT]
     self.bucket = bucket

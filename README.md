@@ -39,7 +39,7 @@ Now you can install the plugin on the machines that need access to the repo by:
 
 1. Install Google's Cloud Storage python library, `pip install --upgrade google-cloud-storage`
 2. Install the plugin, e.g.: `yum install -y yum-plugin-gs-iam-*.rpm`
-3. The plugin depends on the google cloud and auth python libraries being installed `pip install google.auth google.cloud`
+3. The plugin depends on the google cloud and auth python libraries being installed `pip install google.auth google.cloud requests`
 
 You are ready to configure your `.repo` file, check out the [example.repo](example.repo).
 
